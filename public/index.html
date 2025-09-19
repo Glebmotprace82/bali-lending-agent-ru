@@ -152,6 +152,18 @@ body.menu-open #mobile-menu-panel {
 body.menu-open #mobile-menu-overlay {
     opacity: 1; /* Делаем фон видимым */
 }
+        /* Скрываем видео на экранах шириной 768px и меньше */
+        @media (max-width: 768px) {
+          #hero-video {
+            display: none; /* Прячем элемент видео */
+          }
+          .hero-section {
+            /* Устанавливаем картинку-постер как фон для всей секции */
+            background-image: url('https://res.cloudinary.com/dsheo9ktv/image/upload/v1748186226/Poster_RiseTrase_720p_fpvpt9.jpg');
+            background-size: cover;
+            background-position: center;
+          }
+    }
 </style>
 </head>
 <body class="bg-black text-gray-800">
