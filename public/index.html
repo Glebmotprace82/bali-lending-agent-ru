@@ -1289,7 +1289,7 @@ body.menu-open #mobile-menu-overlay {
                     console.error('Ошибка при загрузке промптов:', error);
                 }
             }
-            loadPrompts();
+           // loadPrompts();---
             // --- КОНЕЦ НОВОЙ ЧАСТИ ---
 
             // --- НАЧАЛО ВАШЕГО ОРИГИНАЛЬНОГО КОДА (МЕНЮ, АККОРДЕОНЫ И Т.Д.) ---
@@ -1478,9 +1478,16 @@ body.menu-open #mobile-menu-overlay {
                 if (e.target === modal) closeModal();
             });
 
+            // Этот код нужно вставить вместо удаленного блока
             generatePostBtns.forEach(btn => {
                 btn.addEventListener('click', async () => {
                     openModal();
+
+                    // Проверяем, пуст ли объект promptsData. Если да — загружаем его.
+                    if (Object.keys(promptsData).length === 0) {
+                        console.log("Файл prompts.json еще не загружен. Начинаю загрузку...");
+                        await loadPrompts(); // Вызываем и ждем загрузки
+                    }
 
                     const dayKey = btn.dataset.day; // Получаем ключ, например "day1"
                     const context = promptsData[dayKey]; // Находим текст по ключу в загруженных данных
