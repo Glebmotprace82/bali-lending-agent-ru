@@ -1,32 +1,70 @@
-/**
- * Import function triggers from their respective submodules:
- *
- * const {onCall} = require("firebase-functions/v2/https");
- * const {onDocumentWritten} = require("firebase-functions/v2/firestore");
- *
- * See a full list of supported triggers at https://firebase.google.com/docs/functions
- */
+const functions = require("firebase-functions");
+const { GoogleGenerativeAI } = require("@google/generative-ai");
+const { defineString } = require('firebase-functions/params');
 
-const {setGlobalOptions} = require("firebase-functions");
-const {onRequest} = require("firebase-functions/https");
-const logger = require("firebase-functions/logger");
+// Загружаем переменные из .env файла для локального тестирования
+require("dotenv").config();
 
-// For cost control, you can set the maximum number of containers that can be
-// running at the same time. This helps mitigate the impact of unexpected
-// traffic spikes by instead downgrading performance. This limit is a
-// per-function limit. You can override the limit for each function using the
-// `maxInstances` option in the function's options, e.g.
-// `onRequest({ maxInstances: 5 }, (req, res) => { ... })`.
-// NOTE: setGlobalOptions does not apply to functions using the v1 API. V1
-// functions should each use functions.runWith({ maxInstances: 10 }) instead.
-// In the v1 API, each function can only serve one request per container, so
-// this will be the maximum concurrent request count.
-setGlobalOptions({ maxInstances: 10 });
+// Определяем секрет для развертывания
+const geminiApiKey = defineString("GEMINI_API_KEY");
 
-// Create and deploy your first functions
-// https://firebase.google.com/docs/functions/get-started
+exports.generatePost = functions.https.onRequest(async (request, response) => {
+    // Настраиваем CORS
+    response.set('Access-control-Allow-Origin', '*');
+    if (request.method === 'OPTIONS') {
+        response.set('Access-control-Allow-Methods', 'POST');
+        response.set('Access-control-Allow-Headers', 'Content-Type');
+        response.status(204).send('');
+        return;
+    }
 
-// exports.helloWorld = onRequest((request, response) => {
-//   logger.info("Hello logs!", {structuredData: true});
-//   response.send("Hello from Firebase!");
-// });
+    try {
+        // Используем ключ, определенный выше
+        const genAI = new GoogleGenerativeAI(geminiApiKey.value());
+        
+        // --- ИСПРАВЛЕННЫЙ БЛОК ---
+        const model = genAI.getGenerativeModel({
+            model: "gemini-1.5-flash-latest", // <--- ВОТ ЗДЕСЬ ДОБАВЛЕНА ЗАПЯТАЯ
+            generationConfig: {
+                temperature: 0.85,
+            }
+        });
+
+        const context = request.body.context;
+
+        if (!context) {
+            return response.status(400).json({ error: "Не был предоставлен контекст (context)." });
+        }
+        
+        const angles = [
+            "сделай акцент на духовных и мистических аспектах",
+            "сфокусируйся на приключениях, драйве и активных действиях",
+            "опиши этот день с точки зрения гурмана, обращая внимание на еду, напитки и запахи",
+            "создай пост, который в первую очередь передает ощущение роскоши, комфорта и заботы",
+            "напиши текст, делая упор на уникальные факты, историю и культурные детали"
+        ];
+        const randomAngle = angles[Math.floor(Math.random() * angles.length)];
+        
+        const fullPrompt = `**Роль:**
+Ты — не просто гид, а "проводник" в сакральный и настоящий мир Бали. Твой стиль — эпический, глубокий, ты умеешь переплетать древние мифы, природные явления, личные ощущения и исторические факты в единое повествование.
+
+**Задача:**
+На основе предоставленного текста напиши яркий и эмоциональный пост для Instagram. Итоговый текст должен быть объемом примерно 1000-1200 символов.
+Обязательное условие: в этот раз ${randomAngle}.
+
+Строго придерживайся только той информации, которая предоставлена в тексте. Категорически запрещено добавлять любые факты или услуги, которых нет в исходном тексте. Сохрани основной смысл, все эмодзи и хештеги, если они есть.
+
+Вот текст для работы:
+${context}`;
+
+        const result = await model.generateContent(fullPrompt);
+        const geminiResponse = await result.response;
+        const text = geminiResponse.text();
+
+        response.status(200).json({ text: text });
+
+    } catch (error) {
+        console.error("Критическая ошибка при вызове Gemini API:", error);
+        response.status(500).json({ error: "Не удалось сгенерировать пост из-за внутренней ошибки сервера." });
+    }
+});
