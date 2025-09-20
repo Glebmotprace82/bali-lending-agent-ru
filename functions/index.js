@@ -63,7 +63,8 @@ exports.generatePost = functions.https.onRequest(async (request, response) => {
         Обязательное условие: в этот раз ${randomAngle}.
 
         Вот информация для работы:
-        ${enrichedContext}`;
+        Вот информация для работы:
+        ${context}`;
 
         const result = await model.generateContent(fullPrompt);
         const geminiResponse = await result.response;
