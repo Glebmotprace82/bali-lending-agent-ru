@@ -10,15 +10,19 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # НОВЫЙ ШАГ: Создаем временный файл с ключом
+      # Создаем временный файл с ключом
       - name: Create service account file
         run: echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT_TOURDONE_LENDING_GLEB82 }}' > ./service-account.json
 
       - name: Install Firebase CLI
         run: npm install -g firebase-tools
 
+      # 🚀 ДОБАВЛЕННЫЙ ВАЖНЫЙ ШАГ! (этого у тебя не было)
+      - name: Install functions dependencies
+        working-directory: ./functions
+        run: npm install
+
       - name: Deploy to Firebase
         run: firebase deploy --project tourdone-lending-gleb82 --only hosting,functions
         env:
-          # ИСПРАВЛЕНИЕ: Указываем путь к созданному файлу
           GOOGLE_APPLICATION_CREDENTIALS: ./service-account.json
