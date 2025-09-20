@@ -6,6 +6,8 @@ name: Deploy Hosting and Functions on Push
 jobs:
   deploy_live:
     runs-on: ubuntu-latest
+    env:
+      GOOGLE_APPLICATION_CREDENTIALS: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_TOURDONE_LENDING_GLEB82 }}'
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -14,10 +16,4 @@ jobs:
         run: npm install -g firebase-tools
 
       - name: Deploy to Firebase
-        run: |
-          firebase deploy --project 
-tourdone-lending-gleb82 --only hosting,functions
-        env:
-          GOOGLE_APPLICATION_CREDENTIALS: '${{ 
-secrets.FIREBASE_SERVICE_ACCOUNT_TOURDONE_LENDING_GLEB82 
-}}'
+        run: firebase deploy --project tourdone-lending-gleb82 --only hosting,functions
