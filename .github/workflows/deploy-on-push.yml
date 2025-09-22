@@ -22,7 +22,8 @@ jobs:
         working-directory: ./functions
         run: npm install
 
-      - name: Deploy to Firebase
-        run: firebase deploy --project tourdone-lending-gleb82 --only hosting,functions
-        env:
-          GOOGLE_APPLICATION_CREDENTIALS: ./service-account.json
+      - - name: Deploy to Firebase
+  run: firebase deploy --project tourdone-lending-gleb82 --only hosting,functions
+  env:
+    GOOGLE_APPLICATION_CREDENTIALS: ./service-account.json
+    GEMINI_API_KEY: ${{ AIzaSyA4tmnTzPnNU2it5jewJikXA1N2kKJ636k }}
