@@ -26,4 +26,6 @@ jobs:
   run: firebase deploy --project tourdone-lending-gleb82 --only hosting,functions
   env:
     GOOGLE_APPLICATION_CREDENTIALS: ./service-account.json
-    GEMINI_API_KEY: ${{ AIzaSyA4tmnTzPnNU2it5jewJikXA1N2kKJ636k }}
+    # ХОРОШИЙ ПРИМЕР
+env:
+  GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
