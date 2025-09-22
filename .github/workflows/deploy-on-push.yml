@@ -1,31 +1,25 @@
-# Имя рабочего процесса
 name: Deploy to Firebase on Push
 
-# Триггер для запуска: пуш в ветку 'main'
 on:
   push:
     branches:
       - main
 
-# Задания, которые нужно выполнить
 jobs:
   build_and_deploy:
-    # Используем виртуальную машину Ubuntu
     runs-on: ubuntu-latest
-    
-    # Шаги выполнения
     steps:
-      # 1. Шаг: Скачиваем код из репозитория
       - uses: actions/checkout@v4
 
-      # 2. Шаг: Устанавливаем зависимости для Cloud Functions
-      # (Эта команда выполнится внутри папки functions)
       - run: npm ci
         working-directory: ./functions
 
-      # 3. Шаг: Развертываем на Firebase Hosting и Functions
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_TOURDONE_LENDING_GLEB82 }}'
+          
+          # --- ВОТ ВАЖНАЯ СТРОКА, КОТОРАЯ ВСЁ ИСПРАВИТ ---
+          channelId: live
+          
           projectId: tourdone-lending-gleb82
