@@ -1,6 +1,7 @@
 const functions = require("firebase-functions");
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 const { defineString } = require('firebase-functions/params');
+const prompts = require('./functionContent.json');
 
 // Загружаем переменные из .env файла для локального тестирования
 require("dotenv").config();
@@ -33,38 +34,14 @@ exports.generatePost = functions.https.onRequest(async (request, response) => {
         const context = request.body.context;
 
         if (!context) {
-            return response.status(400).json({ error: "Не был предоставлен контекст (context)." });
+            return response.status(400).json({ error: prompts.errors.noContext });
         }
         
-        const angles = [
-            "сделай акцент на духовных и мистических аспектах",
-            "сфокусируйся на приключениях, драйве и активных действиях",
-            "опиши этот день с точки зрения гурмана, обращая внимание на еду, напитки и запахи",
-            "создай пост, который в первую очередь передает ощущение роскоши, комфорта и заботы",
-            "напиши текст, делая упор на уникальные факты, историю и культурные детали"
-        ];
+        const angles = prompts.angles;
         const randomAngle = angles[Math.floor(Math.random() * angles.length)];
         
-        const fullPrompt = `**Роль:**
-        Ты — SMM-специалист и талантливый копирайтер, который создает "сочные" посты о путешествиях на Бали. Ты пишешь для Instagram.
-
-        **Задача:**
-        На основе предоставленной информации напиши короткий, яркий и динамичный пост для Instagram.
-
-        **Строгие правила:**
-        1.  **Объем:** Итоговый текст должен быть объемом **400-600 символов**. Это очень важно.
-        2.  **Стиль:** Текст должен быть легким для чтения, вдохновляющим и лаконичным. Избегай слишком длинных, витиеватых описаний.
-        3.  **Структура:**
-            * Начни с цепляющего заголовка или вопроса (1 предложение).
-            * В основной части (2-3 предложения) передай главную эмоцию и суть дня, упомянув 1-2 ключевых места или события. Не нужно описывать всё подряд.
-            * Заверши призывом к действию или открытым вопросом.
-        4.  **Контент:** Используй **только** информацию из предоставленного текста. Сохрани ключевые эмодзи и хештеги, если они есть.
-        5.  **Эмодзи:** Используй примерно 5 релевантных эмодзи, чтобы сделать текст более живым.
-
-        Обязательное условие: в этот раз ${randomAngle}.
-
-        Вот информация для работы:
-        ${context}`;
+        const p = prompts.promptContent;
+        const fullPrompt = `${p.role}\n\n${p.task}\n\n${p.rules}\n\n${p.conditionPrefix} ${randomAngle}.\n\n${p.contextPrefix}\n${context}`;
 
         const result = await model.generateContent(fullPrompt);
         const geminiResponse = await result.response;
@@ -73,7 +50,7 @@ exports.generatePost = functions.https.onRequest(async (request, response) => {
         response.status(200).json({ text: text });
 
     } catch (error) {
-        console.error("Критическая ошибка при вызове Gemini API:", error);
-        response.status(500).json({ error: "Не удалось сгенерировать пост из-за внутренней ошибки сервера." });
+        console.error(prompts.errors.apiCallErrorLog, error);
+        response.status(500).json({ error: prompts.errors.internalError });
     }
 });
