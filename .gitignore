@@ -1,3 +1,73 @@
+# =========================
+# macOS system files
+# =========================
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.Spotlight-V100
+.Trashes
+.fseventsd
+
+# =========================
+# Node / npm
+# =========================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# =========================
+# Firebase
+# =========================
+.firebase/
+.firebase-tools.json
+.firebaserc.local
+
+# =========================
+# Xcode / iOS
+# =========================
+*.xcworkspace
+*.xcuserstate
+*.xcuserdatad
+*.xcsettings
+*.pbxuser
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+project.xcworkspace/
+xcuserdata/
+DerivedData/
+build/
+*.pbxproj
+
+# =========================
+# VSCode (если используете)
+# =========================
+.vscode/
+
+# =========================
+# Logs / temp
+# =========================
+*.log
+*.tmp
+*.swp
+*.swo
+
+# =========================
+# Явно разрешённые файлы
+# =========================
+!public/**
+!functions/**
+!firebase.json
+!.firebaserc
+!package.json
+!package-lock.json
+!.gitignore
+!.github/**
+!README.md
 # Logs
 logs
 *.log
