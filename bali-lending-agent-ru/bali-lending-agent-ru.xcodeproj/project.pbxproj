@@ -6,10 +6,29 @@
 	objectVersion = 56;
 	objects = {
 
+/* Begin PBXFileReference section */
+		3D6A70022E82D1E000EB6133 /* package.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = package.json; path = ../package.json; sourceTree = "<group>"; };
+		3D6A70032E82D1E000EB6133 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = .gitignore; path = ../.gitignore; sourceTree = "<group>"; };
+		3D6A70042E82D1E000EB6133 /* .github */ = {isa = PBXFileReference; lastKnownFileType = folder; name = .github; path = ../.github; sourceTree = "<group>"; };
+		3D6A70052E82D1E000EB6133 /* package-lock.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = "package-lock.json"; path = "../package-lock.json"; sourceTree = "<group>"; };
+		3D6A70062E82D1E000EB6133 /* public */ = {isa = PBXFileReference; lastKnownFileType = folder; name = public; path = ../public; sourceTree = "<group>"; };
+		3D6A70072E82D1E000EB6133 /* functions */ = {isa = PBXFileReference; lastKnownFileType = folder; name = functions; path = ../functions; sourceTree = "<group>"; };
+		3D6A70082E82D1E000EB6133 /* firebase.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = firebase.json; path = ../firebase.json; sourceTree = "<group>"; };
+		3D6A70092E82D1E000EB6133 /* .firebaserc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = .firebaserc; path = ../.firebaserc; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
 /* Begin PBXGroup section */
 		3D6A6FEF2E82BD9F00EB6133 = {
 			isa = PBXGroup;
 			children = (
+				3D6A70092E82D1E000EB6133 /* .firebaserc */,
+				3D6A70042E82D1E000EB6133 /* .github */,
+				3D6A70032E82D1E000EB6133 /* .gitignore */,
+				3D6A70082E82D1E000EB6133 /* firebase.json */,
+				3D6A70072E82D1E000EB6133 /* functions */,
+				3D6A70052E82D1E000EB6133 /* package-lock.json */,
+				3D6A70022E82D1E000EB6133 /* package.json */,
+				3D6A70062E82D1E000EB6133 /* public */,
 			);
 			sourceTree = "<group>";
 		};
