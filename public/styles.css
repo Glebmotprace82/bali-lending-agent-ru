@@ -1,3 +1,108 @@
+/* ДОБАВЬТЕ ЭТИ СТИЛИ В НАЧАЛО ВАШЕГО styles.css ФАЙЛА */
+
+/* Убираем подчеркивания у всех ссылок по умолчанию */
+a {
+    text-decoration: none;
+}
+
+/* Восстанавливаем подчеркивания только при hover там, где нужно */
+a:hover {
+    text-decoration: none;
+}
+
+/* Специальные стили для навигационных ссылок */
+nav a,
+#navbar a,
+.tab-button {
+    text-decoration: none !important;
+    border: none;
+    background: none;
+}
+
+/* Исправляем стили табов */
+.tab-button {
+    background: transparent;
+    border: none;
+    border-bottom: 3px solid transparent;
+    padding: 0.75rem 1.25rem 0.75rem 1.25rem;
+    margin-bottom: -3px;
+    transition: all 0.3s ease;
+}
+
+.tab-button.active {
+    color: #2dd4bf;
+    border-bottom: 3px solid #2dd4bf;
+    background: transparent;
+}
+
+/* Убираем outline у кнопок */
+button:focus {
+    outline: none;
+}
+
+/* Исправляем позиционирование галерейных точек */
+.gallery-dots {
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+    padding-top: 0.75rem;
+}
+
+.gallery-dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    background-color: #9ca3af;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+@media (min-width: 640px) {
+    .gallery-dot {
+        width: 0.75rem;
+        height: 0.75rem;
+    }
+}
+
+.gallery-dot.active {
+    background-color: #2dd4bf;
+    transform: scale(1.25);
+}
+
+/* Исправляем аспект-рацио для галерей */
+.gallery-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    margin: 1rem 0;
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+.gallery-slides {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.gallery-slide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.7s ease-in-out;
+}
+
+.gallery-slide:first-child {
+    opacity: 1;
+}
+
+.gallery-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
 /* =================================
    БАЗОВЫЕ СТИЛИ И СБРОС
    ================================= */
