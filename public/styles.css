@@ -1,5 +1,5 @@
 /* =================================
-   БАЗОВЫЕ СТИЛИ И СБРОС
+   ПОЛНЫЙ РАБОЧИЙ CSS ФАЙЛ
    ================================= */
 
 * {
@@ -19,7 +19,7 @@ body {
     line-height: 1.6;
 }
 
-/* Убираем стандартные стили ссылок */
+/* Убираем подчеркивания у ссылок */
 a {
     text-decoration: none;
     color: inherit;
@@ -27,18 +27,6 @@ a {
 
 a:hover {
     text-decoration: none;
-}
-
-/* Убираем стандартные стили кнопок */
-button {
-    background: none;
-    border: none;
-    font-family: inherit;
-    cursor: pointer;
-}
-
-button:focus {
-    outline: none;
 }
 
 /* =================================
@@ -285,7 +273,7 @@ button:focus {
 }
 
 /* =================================
-   СПЕЦИАЛЬНЫЕ КОМПОНЕНТЫ САЙТА
+   КОМПОНЕНТЫ САЙТА
    ================================= */
 
 /* Навигация */
@@ -298,6 +286,10 @@ button:focus {
     z-index: 50;
     box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
     transition: all 0.3s ease;
+}
+
+#navbar a {
+    text-decoration: none;
 }
 
 /* Герой секция */
@@ -326,24 +318,6 @@ button:focus {
     z-index: -50;
 }
 
-/* Основная кнопка героя */
-.hero-section a[href="#program"] {
-    background-color: #ffffff !important;
-    color: #14b8a6 !important;
-    font-weight: 700;
-    padding: 0.75rem 2rem;
-    border-radius: 9999px;
-    transition: all 0.3s ease;
-    box-shadow: 0 25px 50px -12px rgba(13, 148, 136, 0.5);
-    display: inline-block;
-    text-decoration: none;
-}
-
-.hero-section a[href="#program"]:hover {
-    background-color: #e5e7eb !important;
-    transform: scale(1.05);
-}
-
 /* Аккордеон */
 .accordion-content {
     display: grid;
@@ -355,26 +329,18 @@ button:focus {
     overflow: hidden;
 }
 
+.accordion-button {
+    background: transparent;
+    border: none;
+    font-family: inherit;
+    cursor: pointer;
+    text-decoration: none;
+}
+
 .accordion-button.active + .accordion-content {
     grid-template-rows: 1fr;
     padding-top: 1rem;
     padding-bottom: 1rem;
-}
-
-.accordion-button {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    text-align: left;
-    padding: 1.25rem;
-    transition: all 0.3s ease;
-    background-color: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(12px);
-    color: #1f2937;
-    border-radius: 1rem;
-    box-shadow: 5px 25px 50px -12px rgba(0,0,0,0.5);
-    margin-bottom: 1rem;
 }
 
 .accordion-button .arrow {
@@ -396,6 +362,10 @@ button:focus {
 }
 
 /* Табы */
+.tabs-component {
+    width: 100%;
+}
+
 .tab-content {
     display: none;
 }
@@ -405,30 +375,19 @@ button:focus {
 }
 
 .tab-button {
-    background: transparent !important;
-    border: none !important;
-    border-bottom: 3px solid transparent !important;
-    padding: 0.75rem 1.25rem;
-    margin: 0;
-    font-weight: 600;
-    color: #6b7280;
-    transition: all 0.3s ease;
+    background: transparent;
+    border: none;
+    border-bottom: 3px solid transparent;
+    font-family: inherit;
     cursor: pointer;
-}
-
-.tab-button:hover {
-    color: #1f2937;
+    text-decoration: none;
+    margin-bottom: -1px;
+    transition: all 0.3s ease;
 }
 
 .tab-button.active {
-    color: #2dd4bf !important;
-    border-bottom: 3px solid #2dd4bf !important;
-}
-
-/* Исправляем контейнер табов */
-.tabs-component .flex {
-    border-bottom: 1px solid #d1d5db;
-    margin-bottom: -1px;
+    color: #2dd4bf;
+    border-bottom: 3px solid #2dd4bf;
 }
 
 /* Sticky фоны */
@@ -522,23 +481,6 @@ button:focus {
     transform: scale(1.25);
 }
 
-/* Кнопка генерации постов */
-.generate-post-btn {
-    background-color: #ccfbf1 !important;
-    color: #0f766e !important;
-    font-weight: 600;
-    padding: 0.5rem 1rem;
-    border-radius: 0.5rem;
-    font-size: 0.875rem;
-    transition: all 0.3s ease;
-    border: none;
-    cursor: pointer;
-}
-
-.generate-post-btn:hover {
-    background-color: #99f6e4 !important;
-}
-
 /* Списки с галочками */
 .list-checkmark {
     list-style-type: none;
@@ -588,7 +530,19 @@ body.menu-open #mobile-menu-overlay {
     opacity: 1;
 }
 
-/* Специальные тени и эффекты */
+/* Кнопки */
+button {
+    background: transparent;
+    border: none;
+    font-family: inherit;
+    cursor: pointer;
+}
+
+button:focus {
+    outline: none;
+}
+
+/* Специальные эффекты */
 .backdrop-blur-sm { backdrop-filter: blur(4px); }
 .backdrop-blur-md { backdrop-filter: blur(12px); }
 .backdrop-blur-lg { backdrop-filter: blur(16px); }
@@ -604,58 +558,7 @@ body.menu-open #mobile-menu-overlay {
     box-shadow: 0 25px 50px -12px rgba(19, 78, 74, 0.5);
 }
 
-/* Кнопка "Стать партнером" в навигации и в конце */
-a[href="#contact"],
-.bg-teal-500 {
-    background-color: #14b8a6 !important;
-    color: #ffffff !important;
-    font-weight: 700;
-    padding: 0.5rem 1rem;
-    border-radius: 9999px;
-    transition: all 0.3s ease;
-    text-decoration: none;
-    border: none;
-    cursor: pointer;
-    display: inline-block;
-}
-
-a[href="#contact"]:hover,
-.bg-teal-500:hover,
-.hover\:bg-teal-600:hover {
-    background-color: #0d9488 !important;
-}
-
-/* Форма "Стать партнером" */
-#contact-form input,
-#contact-form button[type="submit"] {
-    width: 100%;
-    padding: 0.75rem 1rem;
-    border: 1px solid #d1d5db;
-    border-radius: 0.375rem;
-    margin-bottom: 1rem;
-    font-family: inherit;
-}
-
-#contact-form input:focus {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.1);
-    border-color: #14b8a6;
-}
-
-#contact-form button[type="submit"] {
-    background-color: #14b8a6 !important;
-    color: white !important;
-    font-weight: 700;
-    border: none;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-#contact-form button[type="submit"]:hover {
-    background-color: #0d9488 !important;
-}
-
-/* Адаптивность для мобильных */
+/* Адаптивность */
 @media (max-width: 768px) {
     #hero-video {
         display: none;
@@ -667,11 +570,6 @@ a[href="#contact"]:hover,
     }
 }
 
-/* Дополнительные утилиты */
 .aspect-video {
     aspect-ratio: 16 / 9;
-}
-
-.preload-none {
-    preload: none;
 }
