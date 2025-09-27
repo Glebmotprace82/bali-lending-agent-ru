@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Эксклюзивный тур на Бали 10 дней/9 ночей - Презентация для Агентов</title>
-    <link rel="stylesheet" href="./styles.css">
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -167,13 +167,6 @@ body.menu-open #mobile-menu-overlay {
 </style>
 </head>
 <body class="bg-black text-gray-800">
-    <div class="flex flex-col items-center bg-gray-100 min-h-screen p-10">
-      <h1 class="text-4xl font-bold text-blue-600 mb-6">Tailwind работает!</h1>
-      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-        Проверить кнопку
-      </button>
-    </div>
-
     <div id="mobile-menu-container" class="fixed inset-0 z-[100] hidden">
         <div id="mobile-menu-overlay" class="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
         <div id="mobile-menu-panel" class="relative z-10 w-4/5 max-w-xs h-1/2 bg-white/90 backdrop-blur-lg p-6">
@@ -191,8 +184,40 @@ body.menu-open #mobile-menu-overlay {
         <div class="container mx-auto px-4 lg:px-6 py-3">
             <div class="flex justify-between items-center">
                 <a href="#" id="logo-link" class="flex-shrink-0">
-    <img src="https://res.cloudinary.com/dsheo9ktv/image/upload/v1757565656/tourdone-logo-bali-travel-500_rh3gfi.webp
-    " alt="Логотип компании" class="h-10 w-auto"></a>
+                    <picture>
+                      <source srcset="
+                        https://baliguideagent-cdn.b-cdn.net/Presentation_Agent_Bunny/Other/baliguideagent-logo-bali-travel@320.avif 320w,
+                        https://baliguideagent-cdn.b-cdn.net/Presentation_Agent_Bunny/Other/baliguideagent-logo-bali-travel@500.avif 500w,
+                        https://baliguideagent-cdn.b-cdn.net/Presentation_Agent_Bunny/Other/baliguideagent-logo-bali-travel@768.avif 768w,
+                        https://baliguideagent-cdn.b-cdn.net/Presentation_Agent_Bunny/Other/baliguideagent-logo-bali-travel@1024.avif 1024w,
+                        https://baliguideagent-cdn.b-cdn.net/Presentation_Agent_Bunny/Other/baliguideagent-logo-bali-travel@1440.avif 1440w,
+                        https://baliguideagent-cdn.b-cdn.net/Presentation_Agent_Bunny/Other/baliguideagent-logo-bali-travel@1920.avif 1920w,
+                        https://baliguideagent-cdn.b-cdn.net/Presentation_Agent_Bunny/Other/baliguideagent-logo-bali-travel@2560.avif 2560w
+                      " type="image/avif" sizes="100vw">
+                      <source srcset="
+                        https://baliguideagent-cdn.b-cdn.net/Presentation_Agent_Bunny/Other/baliguideagent-logo-bali-travel@320.webp 320w,
+                        https://baliguideagent-cdn.b-cdn.net/Presentation_Agent_Bunny/Other/baliguideagent-logo-bali-travel@500.webp 500w,
+                        https://baliguideagent-cdn.b-cdn.net/Presentation_Agent_Bunny/Other/baliguideagent-logo-bali-travel@768.webp 768w,
+                        https://baliguideagent-cdn.b-cdn.net/Presentation_Agent_Bunny/Other/baliguideagent-logo-bali-travel@1024.webp 1024w,
+                        https://baliguideagent-cdn.b-cdn.net/Presentation_Agent_Bunny/Other/baliguideagent-logo-bali-travel@1440.webp 1440w,
+                        https://baliguideagent-cdn.b-cdn.net/Presentation_Agent_Bunny/Other/baliguideagent-logo-bali-travel@1920.webp 1920w,
+                        https://baliguideagent-cdn.b-cdn.net/Presentation_Agent_Bunny/Other/baliguideagent-logo-bali-travel@2560.webp 2560w
+                      " type="image/webp" sizes="100vw">
+                      <img loading="lazy"
+                           src="https://baliguideagent-cdn.b-cdn.net/Presentation_Agent_Bunny/Other/baliguideagent-logo-bali-travel@1024.jpg"
+                           srcset="
+                             https://baliguideagent-cdn.b-cdn.net/Presentation_Agent_Bunny/Other/baliguideagent-logo-bali-travel@320.jpg 320w,
+                             https://baliguideagent-cdn.b-cdn.net/Presentation_Agent_Bunny/Other/baliguideagent-logo-bali-travel@500.jpg 500w,
+                             https://baliguideagent-cdn.b-cdn.net/Presentation_Agent_Bunny/Other/baliguideagent-logo-bali-travel@768.jpg 768w,
+                             https://baliguideagent-cdn.b-cdn.net/Presentation_Agent_Bunny/Other/baliguideagent-logo-bali-travel@1024.jpg 1024w,
+                             https://baliguideagent-cdn.b-cdn.net/Presentation_Agent_Bunny/Other/baliguideagent-logo-bali-travel@1440.jpg 1440w,
+                             https://baliguideagent-cdn.b-cdn.net/Presentation_Agent_Bunny/Other/baliguideagent-logo-bali-travel@1920.jpg 1920w,
+                             https://baliguideagent-cdn.b-cdn.net/Presentation_Agent_Bunny/Other/baliguideagent-logo-bali-travel@2560.jpg 2560w
+                           "
+                           alt="Логотип компании"
+                           class="float-left w-12 mr-4 rounded-md">
+                    </picture>
+</a>
                 <div class="hidden md:flex items-center justify-between flex-grow ml-6 lg:ml-10 text-sm xl:text-base">
                     <a href="#about" class="text-gray-600 hover:text-teal-500 transition whitespace-nowrap">Кто мы</a>
                     <a href="#concept" class="text-gray-600 hover:text-teal-500 transition whitespace-nowrap">Концепция</a>
@@ -245,7 +270,40 @@ body.menu-open #mobile-menu-overlay {
                     <div class="pt-8 text-gray-700 leading-relaxed">
                         <div id="who-we-are" class="tab-content active">
                             <h3 class="text-2xl font-semibold mb-4 text-gray-900">Лицензированная туристическая компания с многолетним опытом</h3>
-                            <p class="mb-4"><img loading="lazy" src="https://res.cloudinary.com/dsheo9ktv/image/upload/v1757565655/tourdone-logo-bali-travel-150_o9ejnl.webp" alt="Логотип Tourdone" class="float-left w-12 mr-4 rounded-md"><strong>Tourdone Inter — туристическая компания, основанная в 2018 году на Бали.</strong> Мы являемся принимающей стороной (DMC) и специализируемся на организации авторских групповых и индивидуальных туров на Бали и другие острова Индонезии. Мы работаем для разных рынков — украинского, европейского и других международных рынков.
+                            <p class="mb-4"><picture>
+                                <source srcset="
+                                  https://baliguideagent-cdn.b-cdn.net/Presentation_Agent_Bunny/Other/baliguideagent-logo-bali-travel@320.avif 320w,
+                                  https://baliguideagent-cdn.b-cdn.net/Presentation_Agent_Bunny/Other/baliguideagent-logo-bali-travel@500.avif 500w,
+                                  https://baliguideagent-cdn.b-cdn.net/Presentation_Agent_Bunny/Other/baliguideagent-logo-bali-travel@768.avif 768w,
+                                  https://baliguideagent-cdn.b-cdn.net/Presentation_Agent_Bunny/Other/baliguideagent-logo-bali-travel@1024.avif 1024w,
+                                  https://baliguideagent-cdn.b-cdn.net/Presentation_Agent_Bunny/Other/baliguideagent-logo-bali-travel@1440.avif 1440w,
+                                  https://baliguideagent-cdn.b-cdn.net/Presentation_Agent_Bunny/Other/baliguideagent-logo-bali-travel@1920.avif 1920w,
+                                  https://baliguideagent-cdn.b-cdn.net/Presentation_Agent_Bunny/Other/baliguideagent-logo-bali-travel@2560.avif 2560w
+                                " type="image/avif" sizes="100vw">
+                                <source srcset="
+                                  https://baliguideagent-cdn.b-cdn.net/Presentation_Agent_Bunny/Other/baliguideagent-logo-bali-travel@320.webp 320w,
+                                  https://baliguideagent-cdn.b-cdn.net/Presentation_Agent_Bunny/Other/baliguideagent-logo-bali-travel@500.webp 500w,
+                                  https://baliguideagent-cdn.b-cdn.net/Presentation_Agent_Bunny/Other/baliguideagent-logo-bali-travel@768.webp 768w,
+                                  https://baliguideagent-cdn.b-cdn.net/Presentation_Agent_Bunny/Other/baliguideagent-logo-bali-travel@1024.webp 1024w,
+                                  https://baliguideagent-cdn.b-cdn.net/Presentation_Agent_Bunny/Other/baliguideagent-logo-bali-travel@1440.webp 1440w,
+                                  https://baliguideagent-cdn.b-cdn.net/Presentation_Agent_Bunny/Other/baliguideagent-logo-bali-travel@1920.webp 1920w,
+                                  https://baliguideagent-cdn.b-cdn.net/Presentation_Agent_Bunny/Other/baliguideagent-logo-bali-travel@2560.webp 2560w
+                                " type="image/webp" sizes="100vw">
+                                <img loading="lazy"
+                                     src="https://baliguideagent-cdn.b-cdn.net/Presentation_Agent_Bunny/Other/baliguideagent-logo-bali-travel@1024.jpg"
+                                     srcset="
+                                       https://baliguideagent-cdn.b-cdn.net/Presentation_Agent_Bunny/Other/baliguideagent-logo-bali-travel@320.jpg 320w,
+                                       https://baliguideagent-cdn.b-cdn.net/Presentation_Agent_Bunny/Other/baliguideagent-logo-bali-travel@500.jpg 500w,
+                                       https://baliguideagent-cdn.b-cdn.net/Presentation_Agent_Bunny/Other/baliguideagent-logo-bali-travel@768.jpg 768w,
+                                       https://baliguideagent-cdn.b-cdn.net/Presentation_Agent_Bunny/Other/baliguideagent-logo-bali-travel@1024.jpg 1024w,
+                                       https://baliguideagent-cdn.b-cdn.net/Presentation_Agent_Bunny/Other/baliguideagent-logo-bali-travel@1440.jpg 1440w,
+                                       https://baliguideagent-cdn.b-cdn.net/Presentation_Agent_Bunny/Other/baliguideagent-logo-bali-travel@1920.jpg 1920w,
+                                       https://baliguideagent-cdn.b-cdn.net/Presentation_Agent_Bunny/Other/baliguideagent-logo-bali-travel@2560.jpg 2560w
+                                     "
+                                     alt="Логотип Tourdone"
+                                     class="float-left w-12 mr-4 rounded-md">
+                              </picture>
+<strong>Tourdone Inter — туристическая компания, основанная в 2018 году на Бали.</strong> Мы являемся принимающей стороной (DMC) и специализируемся на организации авторских групповых и индивидуальных туров на Бали и другие острова Индонезии. Мы работаем для разных рынков — украинского, европейского и других международных рынков.
                         </div>
                         <div id="founder" class="tab-content">
                             <h3 class="text-2xl font-semibold mb-4 text-gray-900">Глеб Старостенко — основатель и душа компании</h3>
@@ -1157,7 +1215,6 @@ body.menu-open #mobile-menu-overlay {
             </div>
             <div class="content-over-sticky">
                 
-                
                 <section id="sales" class="py-20 bg-transparent">
     <div class="container mx-auto max-w-4xl px-6 bg-white/80 backdrop-blur-md text-gray-800 p-8 lg:p-12 rounded-2xl shadow-[5px_25px_50px_-12px_rgba(0,0,0,0.5)]">
         <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 section-title">Прозрачная и выгодная система продаж</h2>
@@ -1563,3 +1620,4 @@ body.menu-open #mobile-menu-overlay {
     </script>
 </body>
 </html>
+<-L test sync -->
