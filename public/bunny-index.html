@@ -159,12 +159,21 @@ body.menu-open #mobile-menu-overlay {
             display: none; /* Прячем элемент видео */
           }
           .hero-section {
-            /* Устанавливаем картинку-постер как фон для всей секции */
-            background-image: url('https://res.cloudinary.com/dsheo9ktv/image/upload/v1748186226/Poster_RiseTrase_720p_fpvpt9.jpg');
-            background-size: cover;
-            background-position: center;
+              background-image: url('https://baliguideagent-cdn.b-cdn.net/Presentation_Agent_Bunny/Poster_Video/bali-tegalalang-rice-terraces-drone-video-baliguideagent-poster@1024.jpg');
+              background-size: cover;
+              background-position: center;
           }
-    }
+          @media (min-width: 1440px) {
+              .hero-section {
+                  background-image: url('https://baliguideagent-cdn.b-cdn.net/Presentation_Agent_Bunny/Poster_Video/bali-tegalalang-rice-terraces-drone-video-baliguideagent-poster@1920.jpg');
+              }
+          }
+          @media (max-width: 768px) {
+              .hero-section {
+                  background-image: url('https://baliguideagent-cdn.b-cdn.net/Presentation_Agent_Bunny/Poster_Video/bali-tegalalang-rice-terraces-drone-video-baliguideagent-poster@768.jpg');
+              }
+          }
+
 </style>
 </head>
 <body class="bg-black text-gray-800">
