@@ -25,7 +25,7 @@ exports.generatePost = functions.https.onRequest(async (request, response) => {
         
         // --- ИСПРАВЛЕННЫЙ БЛОК ---
         const model = genAI.getGenerativeModel({
-            model: "gemini-1.5-flash", // <--- ВОТ ЗДЕСЬ ДОБАВЛЕНА ЗАПЯТАЯ
+            model: "gemini-1.5-flash-latest", // <--- ВОТ ЗДЕСЬ ДОБАВЛЕНА ЗАПЯТАЯ
             generationConfig: {
                 temperature: 0.85,
             }
