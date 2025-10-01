@@ -132,10 +132,8 @@ node_modules/
 # Yarn Integrity file
 .yarn-integrity
 
-# dotenv environment variables file
-.env
 
 # dataconnect generated files
 .dataconnect
 
-.env.tourdone-lending-gleb82
+
