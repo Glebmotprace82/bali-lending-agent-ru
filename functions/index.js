@@ -11,10 +11,10 @@ const geminiApiKey = defineString("GEMINI_API_KEY");
 
 exports.generatePost = functions.https.onRequest(async (request, response) => {
     // Настраиваем CORS
-    response.set('Access-control-Allow-Origin', '*');
+    response.set('Access-Control-Allow-Origin', '*');
     if (request.method === 'OPTIONS') {
-        response.set('Access-control-Allow-Methods', 'POST');
-        response.set('Access-control-Allow-Headers', 'Content-Type');
+        response.set('Access-Control-Allow-Methods', 'POST');
+        response.set('Access-Control-Allow-Headers', 'Content-Type');
         response.status(204).send('');
         return;
     }
@@ -25,11 +25,10 @@ exports.generatePost = functions.https.onRequest(async (request, response) => {
         
         // --- ИСПРАВЛЕННЫЙ БЛОК ---
         const model = genAI.getGenerativeModel({
-            model: "gemini-1.5-flash-latest", // <--- ВОТ ЗДЕСЬ ДОБАВЛЕНА ЗАПЯТАЯ
-            generationConfig: {
-                temperature: 0.85,
-            }
+            model: "gemini-1.5-flash",
+            generationConfig: { temperature: 0.85 }
         });
+
 
         const context = request.body.context;
 
