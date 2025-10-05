@@ -13,18 +13,21 @@
         #modal-content {
             transition: transform 0.3s ease-out, opacity 0.3s ease-out;
         }
+        /* Стили для текстового вывода, чтобы сохранять переносы строк */
+        #gemini-content-area pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-family: inherit;
+            font-size: 1rem;
+            color: #374151; /* text-gray-700 */
+        }
     </style>
 </head>
-<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
-    <div class="w-full max-w-4xl mx-auto p-4 flex justify-end">
-        <button id="logout-button" class="bg-red-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-red-600 transition-colors">
-            Выйти
-        </button>
-    </div>
+<body class="bg-gray-100 flex flex-col items-center justify-center min-h-screen p-4">
 
     <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-4xl mx-auto">
         <h1 class="text-2xl md:text-3xl font-bold text-center text-gray-800 mb-2">Генератор постов для Instagram</h1>
-        <p class="text-center text-gray-500 mb-8">Нажмите на кнопку, чтобы создать уникальный пост о туре на Бали.</p>
+        <p class="text-center text-gray-500 mb-8">Нажмите на кнопку, чтобы создать уникальный контент о туре на Бали.</p>
 
         <!-- Основная кнопка -->
         <div class="mb-8 border-b pb-8">
@@ -53,19 +56,49 @@
         <div class="mt-8 pt-8 border-t">
             <button class="generate-post-btn bg-teal-500 text-white font-bold py-3 px-8 rounded-lg hover:bg-teal-600 transition-transform transform hover:scale-105 w-full" 
                data-prompt-context="Напиши интересный и познавательный пост для Instagram о 5-7 малоизвестных, но увлекательных фактах о Бали. Например, о балийском календаре, уникальной системе орошения Субак, дне тишины Ньепи, или о том, почему на Бали так много однофамильцев. Сделай пост легким для чтения и захватывающим.">
-               ✨ Сгенерировать пост "Интересные факты о Бали"
+              🧠 Сгенерировать пост "Интересные факты о Бали"
            </button>
+       </div>
+       
+       <!-- NEW SECTION: Sales Assistant -->
+       <div class="mt-8 pt-8 border-t">
+            <h2 class="text-xl font-semibold text-center text-gray-700 mb-4">✨ Помощник по продажам</h2>
+            <p class="text-center text-gray-500 mb-4">Столкнулись с возражением клиента? Получите совет, как лучше ответить.</p>
+            <div class="flex flex-col sm:flex-row gap-2">
+                <input type="text" id="objection-input" placeholder="Например: 'Это слишком дорого'" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500 flex-grow">
+                <button id="handle-objection-btn" class="bg-amber-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-amber-600 transition-colors">
+                    💡 Получить ответ
+                </button>
+            </div>
+       </div>
+
+       <!-- NEW SECTION: Bali Assistant -->
+       <div class="mt-8 pt-8 border-t">
+            <h2 class="text-xl font-semibold text-center text-gray-700 mb-4">✨ Ваш Ассистент по Бали</h2>
+            <p class="text-center text-gray-500 mb-4">Есть вопрос о Бали? Спросите что угодно, и наш AI-ассистент найдет ответ!</p>
+            <div class="flex flex-col sm:flex-row gap-2">
+                <input type="text" id="bali-question-input" placeholder="Например: 'Какая погода на Бали в июле?'" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 flex-grow">
+                <button id="ask-question-btn" class="bg-indigo-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-indigo-600 transition-colors">
+                    🔍 Спросить
+                </button>
+            </div>
        </div>
 
     </div>
 
+    <div class="w-full max-w-4xl flex justify-center mt-6">
+        <button id="logout-button" class="bg-red-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-red-600 transition-colors">
+            Выйти
+        </button>
+    </div>
+
 
     <!-- HTML-СТРУКТУРА МОДАЛЬНОГО ОКНА (ПОПАПА) -->
-    <div id="gemini-modal" class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+    <div id="gemini-modal" class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-[100] hidden items-center justify-center p-4">
         <div class="bg-white rounded-lg shadow-xl w-full max-w-2xl transform transition-all scale-95 opacity-0" id="modal-content">
             <div class="p-6">
                 <div class="flex justify-between items-center border-b pb-3 mb-4">
-                    <h3 class="text-xl font-semibold text-gray-800">✨ Ваш пост для соцсетей</h3>
+                    <h3 id="modal-title" class="text-xl font-semibold text-gray-800">✨ Ваш пост для соцсетей</h3>
                     <button id="close-modal-btn" class="text-gray-400 hover:text-gray-600 text-3xl leading-none">&times;</button>
                 </div>
                 <div id="modal-body">
@@ -75,14 +108,14 @@
                             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                         </svg>
-                        <p class="mt-4 text-gray-600">Магия Бали творится... Генерируем текст...</p>
+                        <p id="loader-text" class="mt-4 text-gray-600">Магия Бали творится... Генерируем текст...</p>
                     </div>
                     <!-- Область для результата -->
-                    <div id="gemini-result" class="hidden">
-                        <textarea id="result-textarea" readonly class="w-full h-48 p-3 border rounded-md bg-gray-50 text-gray-700 resize-none focus:outline-none focus:ring-2 focus:ring-teal-500"></textarea>
-                    </div>
+                    <div id="gemini-content-area" class="min-h-[240px] max-h-[60vh] overflow-y-auto"></div>
                 </div>
-                <div id="modal-footer" class="mt-6 text-right hidden">
+                <div id="modal-footer" class="mt-6 flex justify-end gap-3 hidden">
+                    <button id="generate-image-btn" class="bg-purple-500 text-white font-bold py-2 px-4 rounded-md hover:bg-purple-600 transition-colors hidden">🎨 Создать изображение</button>
+                    <button id="generate-messenger-btn" class="bg-blue-500 text-white font-bold py-2 px-4 rounded-md hover:bg-blue-600 transition-colors hidden">💬 Создать для мессенджера</button>
                     <button id="copy-text-btn" class="bg-teal-500 text-white font-bold py-2 px-4 rounded-md hover:bg-teal-600 transition-colors">Копировать текст</button>
                 </div>
             </div>
@@ -91,111 +124,197 @@
 
 
     <!-- JAVASCRIPT-ЛОГИКА -->
+    
+    <!-- Firebase SDK (Software Development Kit) -->
+    <!-- Эти скрипты нужны для связи вашего сайта с вашим проектом Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-functions-compat.js"></script>
+    <script>
+      // ❗️ ВАЖНО: Вставьте сюда конфигурацию вашего Firebase проекта
+      // Вы можете найти ее в настройках вашего проекта на сайте Firebase:
+      // Project Settings > General > Your apps > Web app > SDK setup and configuration
+      const firebaseConfig = {
+        apiKey: "YOUR_API_KEY",
+        authDomain: "YOUR_AUTH_DOMAIN",
+        projectId: "YOUR_PROJECT_ID",
+        storageBucket: "YOUR_STORAGE_BUCKET",
+        messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+        appId: "YOUR_APP_ID"
+      };
+      
+      // Инициализация Firebase
+      firebase.initializeApp(firebaseConfig);
+    </script>
+    
+    <!-- Основной скрипт приложения -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Находим все необходимые элементы на странице
+            // Проверяем, что Firebase был успешно инициализирован
+            if (typeof firebase === 'undefined' || typeof firebase.functions === 'undefined') {
+                console.error("Firebase SDK не загружен или не инициализирован! Убедитесь, что вы добавили скрипты Firebase и объект firebaseConfig перед этим скриптом.");
+                alert("Ошибка конфигурации Firebase. Пожалуйста, проверьте консоль разработчика (F12).");
+                return;
+            }
+            
+            const functions = firebase.functions();
+            
             const modal = document.getElementById('gemini-modal');
             const modalContent = document.getElementById('modal-content');
             const closeModalBtn = document.getElementById('close-modal-btn');
             const generatePostBtns = document.querySelectorAll('.generate-post-btn');
             const loader = document.getElementById('loader');
-            const geminiResult = document.getElementById('gemini-result');
-            const resultTextarea = document.getElementById('result-textarea');
+            const loaderText = document.getElementById('loader-text');
+            const geminiContentArea = document.getElementById('gemini-content-area');
             const modalFooter = document.getElementById('modal-footer');
             const copyTextBtn = document.getElementById('copy-text-btn');
+            const modalTitle = document.getElementById('modal-title');
+            const askQuestionBtn = document.getElementById('ask-question-btn');
+            const baliQuestionInput = document.getElementById('bali-question-input');
+            const generateMessengerBtn = document.getElementById('generate-messenger-btn');
+            const handleObjectionBtn = document.getElementById('handle-objection-btn');
+            const objectionInput = document.getElementById('objection-input');
+            const generateImageBtn = document.getElementById('generate-image-btn');
 
-            // Функция для открытия модального окна
+            let currentPostContent = '';
+            let currentPostContext = '';
+
             const openModal = () => {
-                if (!modal || !modalContent) return;
                 modal.classList.remove('hidden');
+                modal.classList.add('flex');
                 setTimeout(() => modalContent.classList.add('scale-100', 'opacity-100'), 10);
             };
 
-            // Функция для закрытия модального окна
             const closeModal = () => {
-                if (!modal || !modalContent) return;
                 modalContent.classList.remove('scale-100', 'opacity-100');
                 setTimeout(() => {
                     modal.classList.add('hidden');
-                    // Сбрасываем состояние модального окна к начальному
-                    if(loader) loader.style.display = 'flex';
-                    if(geminiResult) geminiResult.classList.add('hidden');
-                    if(modalFooter) modalFooter.classList.add('hidden');
-                    if(resultTextarea) resultTextarea.value = '';
+                    modal.classList.remove('flex');
+                    loader.style.display = 'flex';
+                    geminiContentArea.innerHTML = '';
+                    modalFooter.classList.add('hidden');
+                    currentPostContent = '';
+                    currentPostContext = '';
+                    generateMessengerBtn.classList.add('hidden');
+                    generateImageBtn.classList.add('hidden');
                 }, 300);
             };
 
-            // Навешиваем обработчики на кнопки закрытия и клик вне окна
-            if (closeModalBtn) closeModalBtn.addEventListener('click', closeModal);
-            if (modal) modal.addEventListener('click', (e) => {
-                if (e.target === modal) closeModal();
-            });
+            closeModalBtn.addEventListener('click', closeModal);
+            modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
 
-            // Главная логика: обработка клика на кнопку генерации
-            generatePostBtns.forEach(btn => {
-                btn.addEventListener('click', async () => {
-                    openModal();
-                    
-                    // Получаем контекст из атрибута data-prompt-context
-                    const context = btn.dataset.promptContext;
-                    // Формируем полный запрос для AI
-                    const userQuery = `Напиши короткий, привлекательный и эмоциональный рекламный пост для Instagram на русском языке. Сделай акцент на впечатлениях. Добавь 3-5 релевантных хештегов. Вот контекст: ${context}`;
-                    
-                    try {
-                        const apiKey = ""; // В среде Canvas этот ключ предоставляется автоматически. На вашем сайте используйте безопасный серверный вызов!
-                        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
-                        const payload = { contents: [{ parts: [{ text: userQuery }] }] };
+            async function handleGeminiRequest(userQuery, callType = 'post', useGrounding = false) {
+                openModal();
+                loaderText.textContent = 'Магия Бали творится... Генерируем текст...';
+                loader.style.display = 'flex';
+                geminiContentArea.innerHTML = '';
+                modalFooter.classList.add('hidden');
+                generateMessengerBtn.classList.add('hidden');
+                generateImageBtn.classList.add('hidden');
+                copyTextBtn.style.display = 'inline-block';
 
-                        const response = await fetch(apiUrl, {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify(payload)
-                        });
-                        
-                        if (!response.ok) {
-                           throw new Error(`HTTP error! status: ${response.status}`);
-                        }
+                switch(callType) {
+                    case 'post': modalTitle.textContent = '✨ Ваш пост для соцсетей'; break;
+                    case 'question': modalTitle.textContent = '🔍 Ответ Ассистента по Бали'; break;
+                    case 'messenger': modalTitle.textContent = '💬 Сообщение для мессенджера'; break;
+                    case 'objection': modalTitle.textContent = '💡 Ответ на возражение'; break;
+                }
 
-                        const result = await response.json();
-                        const text = result.candidates[0].content.parts[0].text;
+                try {
+                    const generateTextFunction = functions.httpsCallable('generateText');
+                    const result = await generateTextFunction({ prompt: userQuery, useGrounding });
 
-                        // Показываем результат
-                        if(resultTextarea) resultTextarea.value = text;
-                        if(loader) loader.style.display = 'none';
-                        if(geminiResult) geminiResult.classList.remove('hidden');
-                        if(modalFooter) modalFooter.classList.remove('hidden');
+                    const pre = document.createElement('pre');
+                    pre.textContent = result.data.text;
+                    geminiContentArea.appendChild(pre);
+                    loader.style.display = 'none';
+                    modalFooter.classList.remove('hidden');
 
-                    } catch (error) {
-                        console.error("Ошибка при вызове Gemini API:", error);
-                        if(resultTextarea) resultTextarea.value = "К сожалению, произошла ошибка при генерации текста. Попробуйте еще раз позже.";
-                        if(loader) loader.style.display = 'none';
-                        if(geminiResult) geminiResult.classList.remove('hidden');
-                        if(modalFooter) modalFooter.classList.add('hidden'); // Прячем кнопку "Копировать", если ошибка
+                    if (callType === 'post') {
+                        currentPostContent = result.data.text;
+                        currentPostContext = userQuery;
+                        generateMessengerBtn.classList.remove('hidden');
+                        generateImageBtn.classList.remove('hidden');
                     }
-                });
-            });
-
-            // Логика кнопки "Копировать текст"
-            if (copyTextBtn) {
-                copyTextBtn.addEventListener('click', () => {
-                    if(resultTextarea) {
-                        resultTextarea.select();
-                        // Для совместимости со старыми браузерами
-                        document.execCommand('copy');
-                        
-                        copyTextBtn.textContent = 'Скопировано!';
-                        setTimeout(() => {
-                            copyTextBtn.textContent = 'Копировать текст';
-                        }, 2000);
-                    }
-                });
+                } catch (error) {
+                    console.error("Ошибка при вызове функции generateText:", error);
+                    geminiContentArea.innerHTML = `<pre>К сожалению, произошла ошибка: ${error.message}</pre>`;
+                    loader.style.display = 'none';
+                    modalFooter.classList.remove('hidden');
+                }
             }
+
+            async function generateImage() {
+                if (!currentPostContext) return;
+                modalTitle.textContent = '🎨 Изображение для вашего поста';
+                loaderText.textContent = 'Создаем визуальный шедевр...';
+                loader.style.display = 'flex';
+                geminiContentArea.innerHTML = '';
+                modalFooter.classList.add('hidden');
+                copyTextBtn.style.display = 'none';
+
+                const userPrompt = `A stunning, highly detailed, photorealistic image for a travel social media post about Bali. The scene should be vibrant, lush, and evoke a sense of wonder and adventure. Inspired by: ${currentPostContext}. Cinematic lighting, tropical aesthetic.`;
+
+                try {
+                    const generateImageFunction = functions.httpsCallable('generateImage');
+                    const result = await generateImageFunction({ prompt: userPrompt });
+
+                    if (result.data.base64Image) {
+                        const img = document.createElement('img');
+                        img.src = `data:image/png;base64,${result.data.base64Image}`;
+                        img.className = 'w-full h-auto rounded-lg';
+                        geminiContentArea.appendChild(img);
+                    } else {
+                        throw new Error('Не удалось получить изображение.');
+                    }
+                    loader.style.display = 'none';
+                } catch (error) {
+                    console.error("Ошибка при генерации изображения:", error);
+                    geminiContentArea.innerHTML = `<pre>Не удалось создать изображение: ${error.message}</pre>`;
+                    loader.style.display = 'none';
+                }
+            }
+
+            generatePostBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const context = btn.dataset.promptContext;
+                    const userQuery = `Напиши короткий, привлекательный и эмоциональный рекламный пост для Instagram на русском языке. Сделай акцент на впечатлениях. Добавь 3-5 релевантных хештегов. Вот контекст: ${context}`;
+                    handleGeminiRequest(userQuery, 'post');
+                });
+            });
+
+            askQuestionBtn.addEventListener('click', () => {
+                const question = baliQuestionInput.value;
+                if (!question.trim()) { alert('Пожалуйста, введите ваш вопрос.'); return; }
+                const userQuery = `Ты — дружелюбный и знающий эксперт по туризму на Бали. Ответь на следующий вопрос кратко, точно и полезно для турагента, который консультирует клиента. Вопрос: "${question}"`;
+                handleGeminiRequest(userQuery, 'question', true);
+            });
+            
+            handleObjectionBtn.addEventListener('click', () => {
+                const objection = objectionInput.value;
+                if (!objection.trim()) { alert('Пожалуйста, введите возражение клиента.'); return; }
+                const userQuery = `Ты — опытный коуч по продажам для турагентов. Твой агент продает премиум-тур на Бали. Клиент высказал следующее возражение: "${objection}". Предоставь 2-3 варианта эмпатичных, полезных и убедительных ответов, которые агент может использовать в диалоге. Ответы должны быть краткими и по делу.`;
+                handleGeminiRequest(userQuery, 'objection');
+            });
+
+            generateMessengerBtn.addEventListener('click', () => {
+                if (!currentPostContent) return;
+                const userQuery = `Ты — профессиональный и дружелюбный турагент. Адаптируй следующий пост из соцсетей в короткое, энергичное сообщение для мессенджера (WhatsApp/Telegram). Сделай его менее формальным, чем email, добавь пару релевантных эмодзи, но сохрани суть предложения. Закончи открытым вопросом, чтобы стимулировать диалог (например, "Интересно узнать подробности?"). Вот текст поста: "${currentPostContent}"`;
+                handleGeminiRequest(userQuery, 'messenger');
+            });
+            
+            generateImageBtn.addEventListener('click', generateImage);
+
+            copyTextBtn.addEventListener('click', () => {
+                const textToCopy = geminiContentArea.querySelector('pre')?.textContent;
+                if(textToCopy) {
+                    navigator.clipboard.writeText(textToCopy).then(() => {
+                        copyTextBtn.textContent = 'Скопировано!';
+                        setTimeout(() => { copyTextBtn.textContent = 'Копировать текст'; }, 2000);
+                    });
+                }
+            });
         });
     </script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
-
-    <script src="./scripts/auth-guard.js"></script>
 </body>
 </html>
 
