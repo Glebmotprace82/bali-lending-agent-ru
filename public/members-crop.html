@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Генератор постов для Instagram</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Стили для плавного появления модального окна */
+        #gemini-modal.flex {
+            display: flex;
+        }
+        #modal-content {
+            transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+        }
+        /* Стили для текстового вывода, чтобы сохранять переносы строк */
+        #gemini-content-area pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-family: inherit;
+            font-size: 1rem;
+            color: #374151; /* text-gray-700 */
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex flex-col items-center justify-center min-h-screen p-4">
+
+    <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-4xl mx-auto">
+        <h1 class="text-2xl md:text-3xl font-bold text-center text-gray-800 mb-2">Генератор постов для Instagram</h1>
+        <p class="text-center text-gray-500 mb-8">Нажмите на кнопку, чтобы создать уникальный контент о туре на Бали.</p>
+
+        <div class="mb-8 border-b pb-8">
+             <button class="generate-post-btn bg-teal-500 text-white font-bold py-3 px-8 rounded-lg hover:bg-teal-600 transition-transform transform hover:scale-105 w-full" 
+                data-prompt-context="Создай захватывающий рекламный пост для Instagram о 10-дневном туре на Бали 'Остров Богов'. Опиши все путешествие в целом, упомянув ключевые моменты: культурное сердце Убуда с его духовными практиками и рисовыми террасами, восхождение на вулкан Батур на рассвете, райский остров Нуса-Пенида с его невероятными пляжами, спокойный отдых в Сануре и роскошное завершение в Нуса-Дуа с серфингом и ужином из морепродуктов на закате в Джимбаране. Подчеркни идеальный баланс приключений, релакса и глубокого культурного погружения. Сделай пост эмоциональным и вдохновляющим.">
+                ✨ Сгенерировать пост о всем туре
+            </button>
+        </div>
+
+        <h2 class="text-xl font-semibold text-center text-gray-700 mb-4">Или сгенерируйте пост для конкретного дня:</h2>
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 mb-8">
+            <button class="generate-post-btn bg-teal-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-teal-600 transition-colors text-sm w-full" data-prompt-context="День 1: Прибытие в Убуд, культурное сердце Бали. Заселение в отель AnandaDara Ubud Resort & Spa для отдыха и акклиматизации в окружении тропических джунглей.">🛬 День 1</button>
+            <button class="generate-post-btn bg-teal-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-teal-600 transition-colors text-sm w-full" data-prompt-context="День 2: Погружение в магию Убуда: посещение знаменитых рисовых террас и участие в настоящей духовной церемонии очищения 'Мелукат' в нетуристическом храме под руководством брахмана.">🌾 День 2</button>
+            <button class="generate-post-btn bg-teal-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-teal-600 transition-colors text-sm w-full" data-prompt-context="День 3: Раннее восхождение на вулкан Батур для встречи рассвета над облаками. После спуска — расслабление в горячих термальных источниках и визит на кофейную плантацию для дегустации кофе Лувак.">🌋 День 3</button>
+            <button class="generate-post-btn bg-teal-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-teal-600 transition-colors text-sm w-full" data-prompt-context="День 4: День релакса и самопознания в Убуде. Утренняя йога и медитация, а вечером — сеанс звуковой терапии (саундхилинг) в настоящих пирамидах для глубокого восстановления.">🧘‍♀️ День 4</button>
+            <button class="generate-post-btn bg-teal-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-teal-600 transition-colors text-sm w-full" data-prompt-context="День 5: Переезд из Убуда в Санур. По пути — встреча рассвета в мистическом месте, посещение храма на озере Братан и каскада из четырех разных водопадов. Знакомство с дружелюбными обитателями леса обезьян.">🏞️ День 5</button>
+            <button class="generate-post-btn bg-teal-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-teal-600 transition-colors text-sm w-full" data-prompt-context="День 6: Однодневное путешествие на райский остров Нуса-Пенида. Посещение иконических локаций: скалы-динозавра Kelingking Beach, природного бассейна Angel's Billabong и пляжа Broken Beach.">🏝️ День 6</button>
+            <button class="generate-post-btn bg-teal-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-teal-600 transition-colors text-sm w-full" data-prompt-context="День 7: Свободный день в Сануре для отдыха на пляже или дополнительных активностей на выбор: шоппинг, SPA, рафтинг или полет на вертолете. Вечером — возможность встретить закат в стильном бич-клабе.">🏖️ День 7</button>
+            <button class="generate-post-btn bg-teal-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-teal-600 transition-colors text-sm w-full" data-prompt-context="День 8: Переезд в элитный район Нуса-Дуа. По дороге — знакомство с балийской культурой: посещение традиционного балийского дома и ремесленных деревень, где создают изделия из серебра и батика.">🎨 День 8</button>
+            <button class="generate-post-btn bg-teal-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-teal-600 transition-colors text-sm w-full" data-prompt-context="День 9: Активный день в Нуса-Дуа! Урок серфинга с профессиональными инструкторами. После обеда — поездка к величественному храму Улувату на скале и прощальный ужин со свежайшими морепродуктами на пляже Джимбаран под закатным небом.">🏄‍♀️ День 9</button>
+            <button class="generate-post-btn bg-teal-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-teal-600 transition-colors text-sm w-full" data-prompt-context="День 10: Последний день на райском острове. Время для неспешного отдыха на пляже, покупки сувениров и прощания с Бали перед трансфером в аэропорт.">🛫 День 10</button>
+        </div>
+
+        <div class="mt-8 pt-8 border-t">
+            <button class="generate-post-btn bg-teal-500 text-white font-bold py-3 px-8 rounded-lg hover:bg-teal-600 transition-transform transform hover:scale-105 w-full" 
+               data-prompt-context="Напиши интересный и познавательный пост для Instagram о 5-7 малоизвестных, но увлекательных фактах о Бали. Например, о балийском календаре, уникальной системе орошения Субак, дне тишины Ньепи, или о том, почему на Бали так много однофамильцев. Сделай пост легким для чтения и захватывающим.">
+              🧠 Сгенерировать пост "Интересные факты о Бали"
+           </button>
+       </div>
+       
+       <div class="mt-8 pt-8 border-t">
+            <h2 class="text-xl font-semibold text-center text-gray-700 mb-4">✨ Помощник по продажам</h2>
+            <p class="text-center text-gray-500 mb-4">Столкнулись с возражением клиента? Получите совет, как лучше ответить.</p>
+            <div class="flex flex-col sm:flex-row gap-2">
+                <input type="text" id="objection-input" placeholder="Например: 'Это слишком дорого'" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500 flex-grow">
+                <button id="handle-objection-btn" class="bg-amber-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-amber-600 transition-colors">
+                    💡 Получить ответ
+                </button>
+            </div>
+       </div>
+
+       <div class="mt-8 pt-8 border-t">
+            <h2 class="text-xl font-semibold text-center text-gray-700 mb-4">✨ Ваш Ассистент по Бали</h2>
+            <p class="text-center text-gray-500 mb-4">Есть вопрос о Бали? Спросите что угодно, и наш AI-ассистент найдет ответ!</p>
+            <div class="flex flex-col sm:flex-row gap-2">
+                <input type="text" id="bali-question-input" placeholder="Например: 'Какая погода на Бали в июле?'" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 flex-grow">
+                <button id="ask-question-btn" class="bg-indigo-500 text-white font-bold py-2 px-6 rounded-lg hover:bg-indigo-600 transition-colors">
+                    🔍 Спросить
+                </button>
+            </div>
+       </div>
+
+    </div>
+
+    <div class="w-full max-w-4xl flex justify-center mt-6">
+        <button id="logout-button" class="bg-red-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-red-600 transition-colors">
+            Выйти
+        </button>
+    </div>
+
+
+    <div id="gemini-modal" class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-[100] hidden items-center justify-center p-4">
+        <div class="bg-white rounded-lg shadow-xl w-full max-w-2xl transform transition-all scale-95 opacity-0" id="modal-content">
+            <div class="p-6">
+                <div class="flex justify-between items-center border-b pb-3 mb-4">
+                    <h3 id="modal-title" class="text-xl font-semibold text-gray-800">✨ Ваш пост для соцсетей</h3>
+                    <button id="close-modal-btn" class="text-gray-400 hover:text-gray-600 text-3xl leading-none">&times;</button>
+                </div>
+                <div id="modal-body">
+                    <div id="loader" class="flex flex-col items-center justify-center py-10">
+                        <svg class="animate-spin h-8 w-8 text-teal-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        <p id="loader-text" class="mt-4 text-gray-600">Магия Бали творится... Генерируем текст...</p>
+                    </div>
+                    <div id="gemini-content-area" class="min-h-[240px] max-h-[60vh] overflow-y-auto"></div>
+                </div>
+                <div id="modal-footer" class="mt-6 flex justify-end gap-3 hidden">
+                    <button id="generate-image-btn" class="bg-purple-500 text-white font-bold py-2 px-4 rounded-md hover:bg-purple-600 transition-colors hidden">🎨 Создать изображение</button>
+                    <button id="generate-messenger-btn" class="bg-blue-500 text-white font-bold py-2 px-4 rounded-md hover:bg-blue-600 transition-colors hidden">💬 Создать для мессенджера</button>
+                    <button id="copy-text-btn" class="bg-teal-500 text-white font-bold py-2 px-4 rounded-md hover:bg-teal-600 transition-colors">Копировать текст</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-functions-compat.js"></script>
+    <script>
+      // ✅ ИСПРАВЛЕНО: Добавлены реальные данные из вашего проекта Firebase
+      const firebaseConfig = {
+        apiKey: "AIzaSyCGjMoQyDZUE-TUc2oJ1fIsf3E8hFiyZB4",
+        authDomain: "tourdone-lending-gleb82.firebaseapp.com",
+        projectId: "tourdone-lending-gleb82",
+        storageBucket: "tourdone-lending-gleb82.firebasestorage.app",
+        messagingSenderId: "40827496212",
+        appId: "1:40827496212:web:03e0921d9605393c8b8401"
+      };
+      
+      // Инициализация Firebase
+      firebase.initializeApp(firebaseConfig);
+    </script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Проверяем, что Firebase был успешно инициализирован
+            if (typeof firebase === 'undefined' || typeof firebase.functions === 'undefined') {
+                console.error("Firebase SDK не загружен или не инициализирован! Убедитесь, что вы добавили скрипты Firebase и объект firebaseConfig перед этим скриптом.");
+                alert("Ошибка конфигурации Firebase. Пожалуйста, проверьте консоль разработчика (F12).");
+                return;
+            }
+            
+            const functions = firebase.functions();
+            
+            const modal = document.getElementById('gemini-modal');
+            const modalContent = document.getElementById('modal-content');
+            const closeModalBtn = document.getElementById('close-modal-btn');
+            const generatePostBtns = document.querySelectorAll('.generate-post-btn');
+            const loader = document.getElementById('loader');
+            const loaderText = document.getElementById('loader-text');
+            const geminiContentArea = document.getElementById('gemini-content-area');
+            const modalFooter = document.getElementById('modal-footer');
+            const copyTextBtn = document.getElementById('copy-text-btn');
+            const modalTitle = document.getElementById('modal-title');
+            const askQuestionBtn = document.getElementById('ask-question-btn');
+            const baliQuestionInput = document.getElementById('bali-question-input');
+            const generateMessengerBtn = document.getElementById('generate-messenger-btn');
+            const handleObjectionBtn = document.getElementById('handle-objection-btn');
+            const objectionInput = document.getElementById('objection-input');
+            const generateImageBtn = document.getElementById('generate-image-btn');
+
+            let currentPostContent = '';
+            let currentPostContext = '';
+
+            const openModal = () => {
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+                setTimeout(() => modalContent.classList.add('scale-100', 'opacity-100'), 10);
+            };
+
+            const closeModal = () => {
+                modalContent.classList.remove('scale-100', 'opacity-100');
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                    modal.classList.remove('flex');
+                    loader.style.display = 'flex';
+                    geminiContentArea.innerHTML = '';
+                    modalFooter.classList.add('hidden');
+                    currentPostContent = '';
+                    currentPostContext = '';
+                    generateMessengerBtn.classList.add('hidden');
+                    generateImageBtn.classList.add('hidden');
+                }, 300);
+            };
+
+            closeModalBtn.addEventListener('click', closeModal);
+            modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+
+            async function handleGeminiRequest(userQuery, callType = 'post', useGrounding = false) {
+                openModal();
+                loaderText.textContent = 'Магия Бали творится... Генерируем текст...';
+                loader.style.display = 'flex';
+                geminiContentArea.innerHTML = '';
+                modalFooter.classList.add('hidden');
+                generateMessengerBtn.classList.add('hidden');
+                generateImageBtn.classList.add('hidden');
+                copyTextBtn.style.display = 'inline-block';
+
+                switch(callType) {
+                    case 'post': modalTitle.textContent = '✨ Ваш пост для соцсетей'; break;
+                    case 'question': modalTitle.textContent = '🔍 Ответ Ассистента по Бали'; break;
+                    case 'messenger': modalTitle.textContent = '💬 Сообщение для мессенджера'; break;
+                    case 'objection': modalTitle.textContent = '💡 Ответ на возражение'; break;
+                }
+
+                try {
+                    const generateTextFunction = functions.httpsCallable('generateText');
+                    const result = await generateTextFunction({ prompt: userQuery, useGrounding });
+
+                    const pre = document.createElement('pre');
+                    pre.textContent = result.data.text;
+                    geminiContentArea.appendChild(pre);
+                    loader.style.display = 'none';
+                    modalFooter.classList.remove('hidden');
+
+                    if (callType === 'post') {
+                        currentPostContent = result.data.text;
+                        currentPostContext = userQuery;
+                        generateMessengerBtn.classList.remove('hidden');
+                        generateImageBtn.classList.remove('hidden');
+                    }
+                } catch (error) {
+                    console.error("Ошибка при вызове функции generateText:", error);
+                    geminiContentArea.innerHTML = `<pre>К сожалению, произошла ошибка: ${error.message}</pre>`;
+                    loader.style.display = 'none';
+                    modalFooter.classList.remove('hidden');
+                }
+            }
+
+            async function generateImage() {
+                if (!currentPostContext) return;
+                modalTitle.textContent = '🎨 Изображение для вашего поста';
+                loaderText.textContent = 'Создаем визуальный шедевр...';
+                loader.style.display = 'flex';
+                geminiContentArea.innerHTML = '';
+                modalFooter.classList.add('hidden');
+                copyTextBtn.style.display = 'none';
+
+                const userPrompt = `A stunning, highly detailed, photorealistic image for a travel social media post about Bali. The scene should be vibrant, lush, and evoke a sense of wonder and adventure. Inspired by: ${currentPostContext}. Cinematic lighting, tropical aesthetic.`;
+
+                try {
+                    const generateImageFunction = functions.httpsCallable('generateImage');
+                    const result = await generateImageFunction({ prompt: userPrompt });
+
+                    if (result.data.base64Image) {
+                        const img = document.createElement('img');
+                        img.src = `data:image/png;base64,${result.data.base64Image}`;
+                        img.className = 'w-full h-auto rounded-lg';
+                        geminiContentArea.appendChild(img);
+                    } else {
+                        throw new Error('Не удалось получить изображение.');
+                    }
+                    loader.style.display = 'none';
+                } catch (error) {
+                    console.error("Ошибка при генерации изображения:", error);
+                    geminiContentArea.innerHTML = `<pre>Не удалось создать изображение: ${error.message}</pre>`;
+                    loader.style.display = 'none';
+                }
+            }
+
+            generatePostBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const context = btn.dataset.promptContext;
+                    const userQuery = `Напиши короткий, привлекательный и эмоциональный рекламный пост для Instagram на русском языке. Сделай акцент на впечатлениях. Добавь 3-5 релевантных хештегов. Вот контекст: ${context}`;
+                    handleGeminiRequest(userQuery, 'post');
+                });
+            });
+
+            askQuestionBtn.addEventListener('click', () => {
+                const question = baliQuestionInput.value;
+                if (!question.trim()) { alert('Пожалуйста, введите ваш вопрос.'); return; }
+                const userQuery = `Ты — дружелюбный и знающий эксперт по туризму на Бали. Ответь на следующий вопрос кратко, точно и полезно для турагента, который консультирует клиента. Вопрос: "${question}"`;
+                handleGeminiRequest(userQuery, 'question', true);
+            });
+            
+            handleObjectionBtn.addEventListener('click', () => {
+                const objection = objectionInput.value;
+                if (!objection.trim()) { alert('Пожалуйста, введите возражение клиента.'); return; }
+                const userQuery = `Ты — опытный коуч по продажам для турагентов. Твой агент продает премиум-тур на Бали. Клиент высказал следующее возражение: "${objection}". Предоставь 2-3 варианта эмпатичных, полезных и убедительных ответов, которые агент может использовать в диалоге. Ответы должны быть краткими и по делу.`;
+                handleGeminiRequest(userQuery, 'objection');
+            });
+
+            generateMessengerBtn.addEventListener('click', () => {
+                if (!currentPostContent) return;
+                const userQuery = `Ты — профессиональный и дружелюбный турагент. Адаптируй следующий пост из соцсетей в короткое, энергичное сообщение для мессенджера (WhatsApp/Telegram). Сделай его менее формальным, чем email, добавь пару релевантных эмодзи, но сохрани суть предложения. Закончи открытым вопросом, чтобы стимулировать диалог (например, "Интересно узнать подробности?"). Вот текст поста: "${currentPostContent}"`;
+                handleGeminiRequest(userQuery, 'messenger');
+            });
+            
+            generateImageBtn.addEventListener('click', generateImage);
+
+            copyTextBtn.addEventListener('click', () => {
+                const textToCopy = geminiContentArea.querySelector('pre')?.textContent;
+                if(textToCopy) {
+                    navigator.clipboard.writeText(textToCopy).then(() => {
+                        copyTextBtn.textContent = 'Скопировано!';
+                        setTimeout(() => { copyTextBtn.textContent = 'Копировать текст'; }, 2000);
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
