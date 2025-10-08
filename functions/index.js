@@ -1,6 +1,7 @@
 /**
  * Главный файл облачных функций Firebase.
- * Исправленная версия с единым методом получения API-ключа.
+ * ИСПРАВЛЕННАЯ ВЕРСИЯ: Использует переменные окружения (`process.env`) 
+ * вместо устаревшего `functions.config()`.
  */
 
 const functions = require("firebase-functions");
@@ -12,13 +13,14 @@ admin.initializeApp();
  * Функция для генерации текста с помощью модели Gemini.
  */
 exports.generateText = functions.https.onCall(async (data, context) => {
-  const GEMINI_API_KEY = functions.config().gemini.key;
+  // ✅ ИСПРАВЛЕНО: Получаем ключ современным способом.
+  const GEMINI_API_KEY = process.env.GEMINI_KEY;
 
   if (!GEMINI_API_KEY) {
-    console.error("API-ключ Gemini не найден в конфигурации.");
+    console.error("Переменная окружения GEMINI_KEY не найдена.");
     throw new functions.https.HttpsError(
       "failed-precondition",
-      "API-ключ для Gemini не настроен. Пожалуйста, выполните команду `firebase functions:config:set gemini.key=ВАШ_КЛЮЧ`."
+      "Ключ API не настроен на сервере."
     );
   }
 
@@ -69,17 +71,16 @@ exports.generateText = functions.https.onCall(async (data, context) => {
 
 /**
  * Функция для генерации изображений с помощью модели Imagen.
- * Теперь использует тот же надежный метод получения ключа, что и generateText.
  */
 exports.generateImage = functions.https.onCall(async (data, context) => {
-  // Используем тот же способ, что и в первой функции
-  const GEMINI_API_KEY = functions.config().gemini.key;
+  // ✅ ИСПРАВЛЕНО: Получаем ключ современным способом.
+  const GEMINI_API_KEY = process.env.GEMINI_KEY;
 
   if (!GEMINI_API_KEY) {
-    console.error("API-ключ Gemini не найден в конфигурации для функции изображений.");
+    console.error("Переменная окружения GEMINI_KEY не найдена для функции изображений.");
     throw new functions.https.HttpsError(
       "failed-precondition",
-      "API-ключ для Gemini/Imagen не настроен."
+      "Ключ API не настроен на сервере."
     );
   }
     
@@ -126,3 +127,4 @@ exports.generateImage = functions.https.onCall(async (data, context) => {
     throw new functions.https.HttpsError("internal", "Произошла внутренняя ошибка при генерации изображения.");
   }
 });
+
