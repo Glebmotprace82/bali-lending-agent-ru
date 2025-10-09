@@ -5,18 +5,23 @@
  */
 
 const functions = require("firebase-functions");
+const {defineSecret} = require("firebase-functions/params");
 const admin = require("firebase-admin");
 
 admin.initializeApp();
 
+// Secret Manager: объявляем секрет GEMINI_KEY
+const GEMINI_KEY = defineSecret("GEMINI_KEY");
+
 /**
  * Функция для генерации текста с помощью модели Gemini.
  */
-exports.generateText = functions.https.onCall(async (data, context) => {
-  // ✅ ИСПРАВЛЕНО: Получаем ключ современным способом.
-  const GEMINI_API_KEY = process.env.GEMINI_KEY;
+exports.generateText = functions
+  .runWith({secrets: [GEMINI_KEY]})
+  .https.onCall(async (data, context) => {
+  const apiKey = GEMINI_KEY.value();
 
-  if (!GEMINI_API_KEY) {
+  if (!apiKey) {
     console.error("Переменная окружения GEMINI_KEY не найдена.");
     throw new functions.https.HttpsError(
       "failed-precondition",
@@ -32,7 +37,7 @@ exports.generateText = functions.https.onCall(async (data, context) => {
     );
   }
 
-  const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${GEMINI_API_KEY}`;
+  const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
   const payload = {
     contents: [{parts: [{text: prompt}]}],
   };
@@ -72,11 +77,12 @@ exports.generateText = functions.https.onCall(async (data, context) => {
 /**
  * Функция для генерации изображений с помощью модели Imagen.
  */
-exports.generateImage = functions.https.onCall(async (data, context) => {
-  // ✅ ИСПРАВЛЕНО: Получаем ключ современным способом.
-  const GEMINI_API_KEY = process.env.GEMINI_KEY;
+exports.generateImage = functions
+  .runWith({secrets: [GEMINI_KEY]})
+  .https.onCall(async (data, context) => {
+  const apiKey = GEMINI_KEY.value();
 
-  if (!GEMINI_API_KEY) {
+  if (!apiKey) {
     console.error("Переменная окружения GEMINI_KEY не найдена для функции изображений.");
     throw new functions.https.HttpsError(
       "failed-precondition",
@@ -92,7 +98,7 @@ exports.generateImage = functions.https.onCall(async (data, context) => {
     );
   }
 
-  const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-002:predict?key=${GEMINI_API_KEY}`;
+  const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-002:predict?key=${apiKey}`;
   const payload = {
     instances: [{prompt: prompt}],
     parameters: {sampleCount: 1},
