@@ -28,8 +28,11 @@ exports.generateText = functions
     );
   }
 
+  console.log("Полученные данные:", JSON.stringify(data));
+  
   const {prompt, useGrounding} = data;
   if (!prompt) {
+    console.error("Отсутствует поле prompt в данных:", data);
     throw new functions.https.HttpsError(
       "invalid-argument",
       "В запросе на генерацию текста отсутствует поле 'prompt'."
