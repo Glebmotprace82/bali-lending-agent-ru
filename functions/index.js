@@ -28,7 +28,14 @@ exports.generateText = functions
     );
   }
 
-  console.log("Полученные данные:", JSON.stringify(data));
+  try {
+    console.log("Полученные данные:", JSON.stringify(data, null, 2));
+  } catch (e) {
+    console.log("Полученные данные (безопасное логирование):", {
+      prompt: data?.prompt,
+      useGrounding: data?.useGrounding
+    });
+  }
   
   const {prompt, useGrounding} = data;
   if (!prompt) {
