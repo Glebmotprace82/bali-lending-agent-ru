@@ -17,8 +17,7 @@ const GEMINI_KEY = defineSecret("GEMINI_KEY");
  * Функция для генерации текста с помощью модели Gemini.
  */
 exports.generateText = functions
-  .runWith({secrets: [GEMINI_KEY]})
-  .https.onCall(async (data, context) => {
+  .https.onCall({secrets: [GEMINI_KEY]}, async (data, context) => {
   const apiKey = GEMINI_KEY.value();
 
   if (!apiKey) {
@@ -78,8 +77,7 @@ exports.generateText = functions
  * Функция для генерации изображений с помощью модели Imagen.
  */
 exports.generateImage = functions
-  .runWith({secrets: [GEMINI_KEY]})
-  .https.onCall(async (data, context) => {
+  .https.onCall({secrets: [GEMINI_KEY]}, async (data, context) => {
   const apiKey = GEMINI_KEY.value();
 
   if (!apiKey) {

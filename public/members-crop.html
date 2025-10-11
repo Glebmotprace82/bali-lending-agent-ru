@@ -217,17 +217,16 @@
                 }
 
                 try {
-                    const apiUrl = `https://us-central1-tourdone-lending-gleb82.cloudfunctions.net/callGeminiApi`;
+                    const apiUrl = `https://us-central1-tourdone-lending-gleb82.cloudfunctions.net/generateText`;
                     const payload = {
-                        type: 'text',
-                        prompt: userQuery
+                        prompt: userQuery,
+                        useGrounding: useGrounding
                     };
-                    if (useGrounding) payload.tools = [{ "google_search": {} }];
                     
                     const response = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
                     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
                     const result = await response.json();
-                    const text = result.candidates[0].content.parts[0].text;
+                    const text = result.text;
                     
                     geminiContentArea.innerHTML = `<pre>${text}</pre>`;
                     
@@ -258,9 +257,8 @@
                 const userPrompt = `A stunning, highly detailed, photorealistic image for a travel social media post about Bali. The scene should be vibrant, lush, and evoke a sense of wonder and adventure. Inspired by: ${currentPostContext}. Cinematic lighting, tropical aesthetic.`;
 
                 try {
-                    const apiUrl = `https://us-central1-tourdone-lending-gleb82.cloudfunctions.net/callGeminiApi`;
+                    const apiUrl = `https://us-central1-tourdone-lending-gleb82.cloudfunctions.net/generateImage`;
                     const payload = {
-                        type: 'image',
                         prompt: userPrompt
                     };
 
@@ -268,8 +266,8 @@
                     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
                     const result = await response.json();
 
-                    if (result.predictions && result.predictions[0]?.bytesBase64Encoded) {
-                        currentImageSrc = `data:image/png;base64,${result.predictions[0].bytesBase64Encoded}`;
+                    if (result.base64Image) {
+                        currentImageSrc = `data:image/png;base64,${result.base64Image}`;
                         geminiContentArea.innerHTML = `<img src="${currentImageSrc}" class="w-full h-auto rounded-lg">`;
                         updateFooterButtons('image');
                     } else {
