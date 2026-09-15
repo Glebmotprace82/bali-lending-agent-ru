@@ -1,4 +1,4 @@
-name: Deploy to Firebase on Push
+name: Deploy to Firebase Hosting on Push
 
 on:
   push:
@@ -10,9 +10,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      - run: npm ci
-        working-directory: ./functions
 
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:

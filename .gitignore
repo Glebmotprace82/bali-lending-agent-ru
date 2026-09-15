@@ -60,7 +60,6 @@ build/
 # Явно разрешённые файлы
 # =========================
 !public/**
-!functions/**
 !firebase.json
 !.firebaserc
 !package.json
